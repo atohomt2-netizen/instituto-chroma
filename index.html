@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Instituto Chroma · Cursos de Diseño Gráfico</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,800;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff7f0;--ink:#2a1740;--card:#ffffff;--muted:#6d5a82;--line:#eadcf5;--p:#ff3d81;--v:#7b2ff7;--o:#ff9f1c;--c:#00c2d1;--g:linear-gradient(120deg,#ff3d81,#7b2ff7 55%,#00c2d1);}
+@media(prefers-){:root:not([data-theme="light"]){--bg:#150b24;--ink:#f6ecff;--card:#22123a;--muted:#b9a5d3;--line:#3a2459;}}
+:root[data-theme="dark"]{--bg:#150b24;--ink:#f6ecff;--card:#22123a;--muted:#b9a5d3;--line:#3a2459;}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 'DM Sans',system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.1}
+a{color:var(--v);font-weight:700}
+.wrap{max-width:1080px;margin:auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 1.4rem 'Fraunces',serif;display:flex;gap:8px;align-items:center}
+.logo i{width:26px;height:26px;border-radius:50% 50% 50% 0;background:var(--g);display:inline-block}
+.btn{border:0;cursor:pointer;font:700 1rem 'DM Sans',sans-serif;padding:13px 26px;border-radius:99px;background:var(--g);color:#fff;box-shadow:0 8px 24px #7b2ff755;transition:.2s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-3px) rotate(-1deg)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+section.view{display:none}section.view.on{display:block;animation:in .5s}
+@keyframes in{from{opacity:0;transform:translateY(16px)}}
+/* hero */
+.hero{position:relative;padding:70px 0 90px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.tag{display:inline-block;background:var(--card);border:1px solid var(--line);padding:6px 16px;border-radius:99px;font-weight:700;font-size:.85rem;margin-bottom:18px}
+.hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800}
+.hero h1 em{color:#ff3d81;font-style:italic}
+.hero p{color:var(--muted);margin:20px 0 28px;max-width:480px;font-size:1.1rem}
+.art{position:relative;height:380px}
+.art div{position:absolute;animation:fl 7s ease-in-out infinite}
+.a1{width:210px;height:210px;border-radius:50%;background:var(--p);top:10px;left:20px}
+.a2{width:190px;height:190px;background:var(--c);top:90px;left:150px;border-radius:30px;transform:rotate(18deg)}
+.a3{width:0;height:0;border:90px solid transparent;border-bottom:160px solid var(--o);border-top:0;top:190px;left:40px}
+.a4{width:120px;height:120px;border-radius:50%;border:22px solid var(--v);top:240px;left:230px}
+.a5{font:800 7rem 'Fraunces',serif;color:var(--ink);top:-20px;left:250px;opacity:.9}
+@keyframes fl{0%,100%{transform:none}50%{transform:translateY(-18px) rotate(6deg)}}
+@keyframes fl2{0%,100%{transform:rotate(18deg)}50%{transform:translateY(-18px) rotate(24deg)}}
+.art .a2{animation-name:fl2;animation-delay:1s}
+.art .a3{animation-delay:2s}
+.art .a4{animation-delay:3s}
+.blob{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(90px);opacity:.28;background:var(--g);top:-160px;right:-120px;z-index:-1}
+/* sections */
+.sec{padding:70px 0}.sec h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:10px}
+.sub{color:var(--muted);margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px;position:relative;transition:.25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px #7b2ff722}
+.thumb{height:130px;border-radius:18px;margin-bottom:16px;display:grid;place-items:center;font:800 3rem 'Fraunces',serif;color:#fff}
+.card h3{font-size:1.35rem;margin-bottom:6px}.card p{color:var(--muted);font-size:.95rem}
+.pill{position:absolute;top:16px;right:16px;background:var(--o);color:#2a1740;font-weight:700;font-size:.75rem;padding:4px 12px;border-radius:99px}
+.stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:34px}.stats b{font:800 2.2rem 'Fraunces',serif;display:block}
+/* form */
+.formbox{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}
+.formside{background:var(--g);color:#fff;border-radius:30px;padding:34px}
+.formside h2{color:#fff}
+form.f{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f label{font-weight:700;font-size:.88rem;display:grid;gap:6px}.f .full{grid-column:1/-1}
+input[type=text],input[type=email],input[type=number],select,textarea{font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);width:100%}
+input:focus,select:focus{outline:3px solid #7b2ff755;border-color:var(--v)}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+.opts label{flex-direction:row;display:flex;align-items:center;gap:8px;font-weight:500;background:var(--card);border:2px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer}
+.opts label.sel{border-color:var(--p);background:#ff3d8115}
+input[type=radio],input[type=checkbox]{width:18px;height:18px}
+input[type=range]{width:100%}
+.summary{background:var(--card);border:2px dashed var(--v);border-radius:26px;padding:30px}
+.summary dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:18px 0 24px}.summary dt{color:var(--muted);font-weight:700}
+/* course */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:28px;padding:36px 0 70px}
+aside{position:sticky;top:90px;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px}
+aside button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:700 .95rem 'DM Sans';padding:12px 14px;border-radius:14px;cursor:pointer;margin-bottom:4px}
+aside button.act{background:var(--g);color:#fff}aside button.done::after{content:' ✓';color:var(--c)}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:14px 0 6px}.bar i{display:block;height:100%;width:0;background:var(--g);transition:.4s}
+.mod{display:none}.mod.on{display:block;animation:in .4s}
+.mod h2{font-size:2.4rem;margin-bottom:14px}.mod p{margin:12px 0}
+.figure{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;margin:22px 0;display:grid;place-items:center;gap:10px;text-align:center}
+.figure small{color:var(--muted)}
+.wheel{width:220px;height:220px;border-radius:50%;background:conic-gradient(#ff3b30,#ff9500,#ffe600,#34c759,#00c2d1,#0a60ff,#7b2ff7,#ff3d81,#ff3b30);position:relative}
+.wheel::after{content:'';position:absolute;top:60px;left:60px;right:60px;bottom:60px;background:var(--card);border-radius:50%}
+.swatches{display:flex;gap:0;border-radius:18px;overflow:hidden;width:min(100%,420px)}.swatches span{flex:1;height:60px;display:grid;place-items:end center;color:#fff;font-size:.7rem;padding:4px}
+.video{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;background:#1e0f33;color:#fff;border-radius:26px;padding:16px;text-decoration:none;margin:22px 0}
+.video .vt{height:112px;border-radius:16px;background:var(--g);display:grid;place-items:center;font-size:2.4rem;transition:.2s}.video:hover .vt{transform:scale(1.05)}
+.video small{opacity:.7;font-weight:400}
+.links{display:flex;gap:10px;flex-wrap:wrap}.links a{background:var(--card);border:2px solid var(--line);padding:8px 16px;border-radius:99px;text-decoration:none}
+.nxt{display:flex;justify-content:space-between;margin-top:30px}
+/* exam */
+.q{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;margin-bottom:18px}
+.q h3{font:700 1.1rem 'DM Sans';margin-bottom:6px}.q .t{font-size:.75rem;color:var(--v);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.q .opts{margin-top:12px}.q select[multiple]{min-height:120px}
+/* result */
+.score{text-align:center;padding:40px 0 20px}
+.score .n{font:800 7rem 'Fraunces',serif;color:#ff3d81;line-height:1}
+.diploma{max-width:860px;margin:30px auto;background:#fffaf2;color:#2a1740;border-radius:12px;padding:14px;box-shadow:0 30px 60px #7b2ff733}
+.diploma .in{border:3px solid #ff9f1c;box-shadow:inset 0 0 0 6px #fffaf2,inset 0 0 0 14px #7b2ff7;padding:50px 40px;text-align:center;background:#fffaf2}
+.diploma h2{font-size:clamp(2rem,5vw,3.4rem);color:#7b2ff7}
+.diploma .nm{font:italic 600 clamp(2rem,5vw,3.2rem) 'Fraunces',serif;border-bottom:2px solid #2a1740;display:inline-block;padding:6px 30px;margin:14px 0}
+.seal{width:90px;height:90px;border-radius:50%;background:conic-gradient(#ff9f1c,#ff3d81,#7b2ff7,#ff9f1c);margin:20px auto 0;display:grid;place-items:center;color:#fff;font:800 1.8rem 'Fraunces',serif;box-shadow:0 0 0 6px #fffaf2,0 0 0 9px #ff9f1c}
+.fail{background:var(--card);border:2px dashed var(--p);border-radius:26px;padding:34px;text-align:center;max-width:620px;margin:20px auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);text-align:center}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0008;display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}.modal[hidden]{display:none}.mbox{background:var(--card);color:var(--ink);border-radius:24px;padding:24px;max-width:720px;width:100%;max-height:80vh;overflow:auto}
+@media(max-width:820px){.hero .wrap,.formbox,.layout{grid-template-columns:1fr}.art{height:300px;transform:scale(.8)}aside{position:static}form.f{grid-template-columns:1fr}.video{grid-template-columns:1fr}}
+@media print{body *{visibility:hidden}.diploma,.diploma *{visibility:visible}.diploma{position:absolute;top:0;left:0;right:0;bottom:0;margin:0;box-shadow:none}}
+
+.f .fld{display:grid;gap:6px;font-weight:700;font-size:.88rem}
+.bigtype{font:800 6rem 'Fraunces',Georgia,serif;line-height:1;color:#ff3d81}
+.serifdemo{font:italic 600 1.6rem 'Fraunces',Georgia,serif}
+.sansdemo{font:700 1.4rem 'DM Sans',Arial,sans-serif}
+.asidetitle{font-family:'Fraunces',Georgia,serif;font-size:1.2rem}
+
+form.f[hidden]{display:none}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><div class="logo"><i></i>Chroma</div>
+<div><a href="#" onclick="go('home');return false" style="margin-right:18px;text-decoration:none">Inicio</a><button class="btn" style="padding:9px 20px" onclick="go('home');document.getElementById('registro').scrollIntoView()">Inscribirme</button></div></div></nav>
+
+<!-- INICIO -->
+<section class="view on" id="home">
+<div class="hero"><div class="blob"></div><div class="wrap">
+<div><span class="tag">🎨 Instituto Chroma · Escuela de Arte y Diseño</span>
+<h1>Aprende a diseñar con <em>color, forma</em> y alma.</h1>
+<p>Cursos en línea creados por diseñadores en activo. Estudia a tu ritmo, practica con proyectos reales y obtén tu diploma de aprobación.</p>
+<a class="btn" href="#registro">Empezar ahora ✨</a>
+<div class="stats"><div><b>12k+</b>estudiantes</div><div><b>4.9★</b>valoración</div><div><b>38</b>docentes</div></div></div>
+<div class="art"><div class="a1"></div><div class="a2"></div><div class="a3"></div><div class="a4"></div><div class="a5">Aa</div></div>
+</div></div>
+
+<div class="sec"><div class="wrap"><h2>Nuestros cursos</h2><p class="sub">Elige tu camino creativo. Hoy está abierta la inscripción al curso gratuito de fundamentos.</p>
+<div class="grid">
+<div class="card"><span class="pill">Disponible</span><div class="thumb" style="background:linear-gradient(135deg,#ff3d81,#ff9f1c)">Aa</div><h3>Fundamentos del Diseño Gráfico</h3><p>Color, tipografía, composición y herramientas. 4 módulos · 2 h · Nivel inicial.</p></div>
+<div class="card"><span class="pill" style="background:var(--line);color:var(--muted)">Pronto</span><div class="thumb" style="background:linear-gradient(135deg,#7b2ff7,#00c2d1)">◐</div><h3>Identidad de Marca</h3><p>Logotipos, manuales de marca y sistemas visuales coherentes.</p></div>
+<div class="card"><span class="pill" style="background:var(--line);color:var(--muted)">Pronto</span><div class="thumb" style="background:linear-gradient(135deg,#00c2d1,#34c759)">▶</div><h3>Motion Graphics</h3><p>Da vida a tus diseños con animación y ritmo visual.</p></div>
+</div></div></div>
+
+<div class="sec" id="registro" style="padding-top:0"><div class="wrap"><div class="formbox">
+<div class="formside"><h2>Únete al taller</h2><p style="margin-top:12px">Completa tus datos para acceder al curso <b>Fundamentos del Diseño Gráfico</b>. Al terminar recibirás tu calificación y diploma.</p><p style="margin-top:24px;font-size:2.4rem">🖌️ 📐 🔤 🌈</p></div>
+<div>
+<form class="f" id="reg">
+<label>Nombre<input type="text" id="nom" required minlength="2" placeholder="Ana"></label>
+<label>Apellido<input type="text" id="ape" required minlength="2" placeholder="López"></label>
+<label>Correo electrónico<input type="email" id="mail" required placeholder="ana@correo.com"></label>
+<label>Edad<input type="number" id="edad" required min="10" max="99" placeholder="20"></label>
+<label>País<select id="pais" required><option value="">Selecciona…</option><option>Guatemala</option><option>México</option><option>Colombia</option><option>Argentina</option><option>España</option><option>Chile</option><option>Otro</option></select></label>
+<div class="fld">Nivel de experiencia<div class="opts"><label><input type="radio" name="niv" value="Principiante" checked>Principiante</label><label><input type="radio" name="niv" value="Intermedio">Intermedio</label></div></div>
+<div class="fld full">Intereses<div class="opts"><label><input type="checkbox" name="int" value="Branding">Branding</label><label><input type="checkbox" name="int" value="Ilustración">Ilustración</label><label><input type="checkbox" name="int" value="Web/UI">Web/UI</label><label><input type="checkbox" name="int" value="Editorial">Editorial</label></div></div>
+<div class="full"><button class="btn" type="submit">Registrarme →</button></div>
+</form>
+<div class="summary" id="sum" hidden>
+<h2 style="font-size:1.8rem">¡Registro exitoso! 🎉</h2>
+<dl id="sumdl"></dl>
+<button class="btn" onclick="go('course')">Acceder al curso →</button>
+</div></div></div></div></div>
+</section>
+
+<!-- CURSO -->
+<section class="view" id="course"><div class="wrap layout">
+<aside><b class="asidetitle">Contenido</b>
+<div class="bar"><i id="pbar"></i></div><small id="ptxt" style="color:var(--muted)">0 de 4 módulos</small>
+<div style="margin-top:14px" id="tabs"></div></aside>
+<main>
+<article class="mod on">
+<h2>1 · El poder del color</h2>
+<p>El color comunica emociones antes que las palabras. Existen dos modelos clave: <b>RGB</b> (luz aditiva: rojo, verde y azul, para pantallas) y <b>CMYK</b> (tinta sustractiva, para impresión). El <i>círculo cromático</i> nos ayuda a crear armonías: complementarias, análogas y triádicas.</p>
+<div class="figure"><div class="wheel"></div><small>Círculo cromático: colores opuestos son complementarios (azul ↔ naranja).</small>
+<div class="swatches"><span style="background:#ff3d81">#FF3D81</span><span style="background:#7b2ff7">#7B2FF7</span><span style="background:#00c2d1">#00C2D1</span><span style="background:#ff9f1c">#FF9F1C</span><span style="background:#2a1740">#2A1740</span></div></div>
+<a class="video" href="https://www.youtube.com/results?search_query=teoria+del+color+diseño+grafico" target="_blank" rel="noopener"><div class="vt">▶</div><div><b>Video: Teoría del color en 10 minutos</b><br><small>Se abre en YouTube · Armonías y psicología del color</small></div></a>
+<div class="links"><a href="https://color.adobe.com" target="_blank" rel="noopener">🎨 Adobe Color</a><a href="https://coolors.co" target="_blank" rel="noopener">🌈 Coolors</a></div>
+</article>
+<article class="mod">
+<h2>2 · Tipografía</h2>
+<p>La tipografía es la voz del diseño. Las fuentes <b>serif</b> (Garamond, Georgia, Times New Roman) tienen remates y transmiten tradición; las <b>sans-serif</b> (Helvetica, Arial) son limpias y modernas. Cuida el interlineado, el contraste y la jerarquía.</p>
+<div class="figure"><div class="bigtype">Aa Gg</div>
+<div class="serifdemo">Serif: elegancia y tradición</div><div class="sansdemo">Sans-serif: claridad y modernidad</div><small>Jerarquía: título · subtítulo · texto</small></div>
+<a class="video" href="https://www.youtube.com/results?search_query=tipografia+basica+diseño" target="_blank" rel="noopener"><div class="vt">▶</div><div><b>Video: Guía básica de tipografía</b><br><small>Se abre en YouTube · Familias, pesos y combinaciones</small></div></a>
+<div class="links"><a href="https://fonts.google.com" target="_blank" rel="noopener">🔤 Google Fonts</a><a href="https://fontpair.co" target="_blank" rel="noopener">✨ FontPair</a></div>
+</article>
+<article class="mod">
+<h2>3 · Composición</h2>
+<p>Componer es ordenar. Los cuatro principios de Robin Williams son <b>Contraste, Repetición, Alineación y Proximidad</b>. La <b>regla de tercios</b> divide el espacio en una cuadrícula 3×3: coloca los puntos de interés en las intersecciones.</p>
+<div class="figure"><svg viewBox="0 0 300 200" width="340" role="img" aria-label="Regla de tercios"><rect width="300" height="200" rx="14" fill="#7b2ff7" opacity=".12"/><g stroke="#7b2ff7" stroke-width="1.5" stroke-dasharray="5"><path d="M100 0V200M200 0V200M0 67H300M0 133H300"/></g><circle cx="200" cy="67" r="26" fill="#ff3d81"/><rect x="40" y="110" width="70" height="50" rx="10" fill="#00c2d1"/><path d="M215 150l30 30h-60z" fill="#ff9f1c"/></svg><small>Los elementos clave se ubican en las intersecciones.</small></div>
+<a class="video" href="https://www.youtube.com/results?search_query=principios+de+composicion+diseño+grafico" target="_blank" rel="noopener"><div class="vt">▶</div><div><b>Video: Principios de composición</b><br><small>Se abre en YouTube · Jerarquía y equilibrio</small></div></a>
+<div class="links"><a href="https://www.behance.net" target="_blank" rel="noopener">💡 Behance</a><a href="https://dribbble.com" target="_blank" rel="noopener">🏀 Dribbble</a></div>
+</article>
+<article class="mod">
+<h2>4 · Herramientas y formatos</h2>
+<p>Los gráficos <b>vectoriales</b> (SVG, AI) se escalan sin perder calidad: ideales para logotipos. Los <b>mapas de bits</b> (JPG, PNG) dependen de la resolución: para impresión usa <b>300 ppp</b>, para web 72 ppp. Herramientas populares: Illustrator, Photoshop, Figma, Affinity y la gratuita Inkscape.</p>
+<div class="figure"><svg viewBox="0 0 300 120" width="340"><defs><linearGradient id="gg"><stop offset="0" stop-color="#ff3d81"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs><path d="M20 90C60 -10 110 -10 150 60S240 120 280 20" fill="none" stroke="url(#gg)" stroke-width="8" stroke-linecap="round"/><g fill="#fff" stroke="#2a1740" stroke-width="2"><rect x="14" y="84" width="12" height="12"/><rect x="144" y="54" width="12" height="12"/><rect x="274" y="14" width="12" height="12"/></g></svg><small>Curva Bézier: la base de todo trazo vectorial.</small></div>
+<a class="video" href="https://www.youtube.com/results?search_query=figma+tutorial+principiantes" target="_blank" rel="noopener"><div class="vt">▶</div><div><b>Video: Primeros pasos en Figma</b><br><small>Se abre en YouTube · Tutorial para principiantes</small></div></a>
+<div class="links"><a href="https://www.figma.com" target="_blank" rel="noopener">🖌️ Figma</a><a href="https://inkscape.org" target="_blank" rel="noopener">✒️ Inkscape</a></div>
+<div class="nxt" style="justify-content:center"><button class="btn" id="goexam" disabled>Realizar evaluación 📝</button></div>
+</article>
+<div class="nxt"><button class="btn ghost" id="prev">← Anterior</button><button class="btn" id="next">Siguiente →</button></div>
+<p style="color:var(--muted);text-align:center;margin-top:14px;font-size:.9rem" id="hint">Visita los 4 módulos para desbloquear la evaluación.</p>
+</main></div></section>
+
+<!-- EXAMEN -->
+<section class="view" id="exam"><div class="wrap" style="max-width:780px;padding-top:40px;padding-bottom:70px">
+<h2 style="font-size:2.6rem">Evaluación final 📝</h2><p class="sub">8 preguntas · Cada una vale 1.25 puntos · Aprueba con 6.0 o más.</p>
+<form id="qf"></form><button class="btn" id="send">Enviar respuestas ✓</button></div></section>
+
+<!-- RESULTADO -->
+<section class="view" id="result"><div class="wrap" style="padding:40px 20px 70px">
+<div class="score"><p style="color:var(--muted);font-weight:700">Tu calificación</p><div class="n" id="rn">0</div><p id="rmsg" style="font-size:1.2rem;margin-top:10px"></p></div>
+<div id="rbody"></div>
+<div style="text-align:center;margin-top:20px" id="ract"></div></div></section>
+
+<footer><div class="wrap">© 2026 Instituto Chroma · Hecho con 💜 y mucho color · <a href="#" onclick="showDB();return false">Base de datos</a></div></footer>
+<div id="dlg" class="modal" hidden><div class="mbox"><h3 style="font-size:1.6rem;margin-bottom:12px">Base de datos de registros</h3><div style="overflow-x:auto" id="dbt"></div><p style="margin-top:16px"><button class="btn ghost" onclick="dlg.hidden=true">Cerrar</button></p></div></div>
+
+<script>
+"use strict";
+
+/* ===== Utilidades ===== */
+function $(selector) {
+    return document.querySelector(selector);
+}
+
+function $$(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector));
+}
+
+function esc(texto) {
+    var mapa = {"&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;"};
+    return String(texto).replace(/[&<>"]/g, function (c) {
+        return mapa[c];
+    });
+}
+
+function go(id) {
+    $$(".view").forEach(function (vista) {
+        vista.classList.toggle("on", vista.id === id);
+    });
+    window.scrollTo(0, 0);
+}
+
+/* ===== Base de datos (almacenamiento del navegador) ===== */
+var memoria = [];
+var DB = {
+    todos: function () {
+        try {
+            return JSON.parse(localStorage.getItem("chroma_db") || "[]");
+        } catch (e) {
+            return memoria;
+        }
+    },
+    guardar: function (registro) {
+        var lista = DB.todos();
+        lista.push(registro);
+        memoria = lista;
+        try {
+            localStorage.setItem("chroma_db", JSON.stringify(lista));
+        } catch (e) {
+            console.warn("Almacenamiento no disponible, se usa memoria temporal.");
+        }
+    }
+};
+
+/* ===== Registro del estudiante ===== */
+var usuario = null;
+
+$("#reg").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var intereses = $$("input[name=int]:checked").map(function (i) {
+        return i.value;
+    }).join(", ");
+    usuario = {
+        nombre: $("#nom").value.trim(),
+        apellido: $("#ape").value.trim(),
+        correo: $("#mail").value.trim(),
+        edad: $("#edad").value,
+        pais: $("#pais").value,
+        nivel: $("input[name=niv]:checked").value,
+        intereses: intereses || "—"
+    };
+    var filas = [
+        ["Nombre", usuario.nombre + " " + usuario.apellido],
+        ["Correo", usuario.correo],
+        ["Edad", usuario.edad + " años"],
+        ["País", usuario.pais],
+        ["Nivel", usuario.nivel],
+        ["Intereses", usuario.intereses],
+        ["Curso", "Fundamentos del Diseño Gráfico"]
+    ];
+    $("#sumdl").innerHTML = filas.map(function (f) {
+        return "<dt>" + f[0] + "</dt><dd>" + esc(f[1]) + "</dd>";
+    }).join("");
+    $("#reg").hidden = true;
+    $("#sum").hidden = false;
+});
+
+/* ===== Curso ===== */
+var nombres = ["El color", "Tipografía", "Composición", "Herramientas"];
+var modulos = $$(".mod");
+var vistos = [0];
+var actual = 0;
+
+$("#tabs").innerHTML = nombres.map(function (n, i) {
+    return "<button data-i=\"" + i + "\">" + (i + 1) + ". " + n + "</button>";
+}).join("");
+
+function mostrarModulo(i) {
+    actual = i;
+    if (vistos.indexOf(i) === -1) {
+        vistos.push(i);
+    }
+    modulos.forEach(function (m, j) {
+        m.classList.toggle("on", j === i);
+    });
+    $$("#tabs button").forEach(function (b, j) {
+        b.classList.toggle("act", j === i);
+        b.classList.toggle("done", vistos.indexOf(j) !== -1 && j !== i);
+    });
+    var completo = vistos.length === 4;
+    $("#pbar").style.width = (vistos.length * 25) + "%";
+    $("#ptxt").textContent = vistos.length + " de 4 módulos";
+    $("#prev").style.visibility = i > 0 ? "visible" : "hidden";
+    $("#next").style.visibility = i < 3 ? "visible" : "hidden";
+    $("#goexam").disabled = !completo;
+    $("#hint").textContent = completo
+            ? "¡Listo! Ya puedes presentar la evaluación."
+            : "Visita los 4 módulos para desbloquear la evaluación.";
+    window.scrollTo(0, 0);
+}
+
+$("#tabs").onclick = function (e) {
+    if (e.target.dataset.i !== undefined) {
+        mostrarModulo(Number(e.target.dataset.i));
+    }
+};
+$("#prev").onclick = function () {
+    mostrarModulo(actual - 1);
+};
+$("#next").onclick = function () {
+    mostrarModulo(actual + 1);
+};
+$("#goexam").onclick = function () {
+    go("exam");
+};
+mostrarModulo(0);
+
+/* ===== Evaluación ===== */
+var Q = [
+    {t: "Opción única", q: "¿Cuáles son los colores primarios del modelo aditivo (luz)?", type: "radio",
+        o: ["Rojo, amarillo y azul", "Rojo, verde y azul", "Cian, magenta y amarillo"], a: 1},
+    {t: "Selección múltiple", q: "Selecciona TODAS las tipografías con serifas:", type: "check",
+        o: ["Garamond", "Helvetica", "Georgia", "Times New Roman"], a: [0, 2, 3]},
+    {t: "Lista desplegable", q: "¿Qué formato es el más adecuado para un logotipo escalable?", type: "select",
+        o: ["JPG", "SVG", "GIF", "BMP"], a: 1},
+    {t: "Verdadero / Falso", q: "El modelo CMYK está pensado principalmente para impresión.", type: "radio",
+        o: ["Verdadero", "Falso"], a: 0},
+    {t: "Cuadro de lista (Ctrl/⌘ para varios)", q: "Elige los principios de diseño de Robin Williams:", type: "list",
+        o: ["Contraste", "Aleatoriedad", "Alineación", "Proximidad", "Repetición"], a: [0, 2, 3, 4]},
+    {t: "Control deslizante", q: "¿Qué resolución (ppp) se recomienda para imprimir? Ajusta el control.", type: "range"},
+    {t: "Respuesta corta", q: "¿Cómo se llama la regla que divide la composición en una cuadrícula de 3×3?", type: "text"},
+    {t: "Opción única", q: "¿Cuál es el color complementario del azul?", type: "radio",
+        o: ["Verde", "Naranja", "Violeta", "Rosa"], a: 1}
+];
+
+function opciones(x, i, tipo) {
+    return "<div class=\"opts\">" + x.o.map(function (o, j) {
+        return "<label><input type=\"" + tipo + "\" name=\"q" + i + "\" value=\"" + j + "\">" + o + "</label>";
+    }).join("") + "</div>";
+}
+
+function listaOpciones(x) {
+    return x.o.map(function (o, j) {
+        return "<option value=\"" + j + "\">" + o + "</option>";
+    }).join("");
+}
+
+$("#qf").innerHTML = Q.map(function (x, i) {
+    var h = "<div class=\"q\"><span class=\"t\">" + (i + 1) + ". " + x.t + "</span><h3>" + x.q + "</h3>";
+    if (x.type === "radio") {
+        h += opciones(x, i, "radio");
+    } else if (x.type === "check") {
+        h += opciones(x, i, "checkbox");
+    } else if (x.type === "select") {
+        h += "<select name=\"q" + i + "\"><option value=\"\">Selecciona…</option>" + listaOpciones(x) + "</select>";
+    } else if (x.type === "list") {
+        h += "<select name=\"q" + i + "\" multiple size=\"5\">" + listaOpciones(x) + "</select>";
+    } else if (x.type === "range") {
+        h += "<input type=\"range\" name=\"q" + i + "\" min=\"72\" max=\"600\" value=\"150\" "
+                + "oninput=\"this.nextElementSibling.textContent=this.value+' ppp'\"><b>150 ppp</b>";
+    } else {
+        h += "<input type=\"text\" name=\"q" + i + "\" placeholder=\"Escribe tu respuesta\">";
+    }
+    return h + "</div>";
+}).join("");
+
+function mismoConjunto(a, b) {
+    return a.length === b.length && a.every(function (v) {
+        return b.indexOf(v) !== -1;
+    });
+}
+
+function valores(lista) {
+    return lista.map(function (e) {
+        return Number(e.value);
+    });
+}
+
+function textos(x, indices) {
+    return indices.map(function (j) {
+        return x.o[j];
+    }).join(", ") || "—";
+}
+
+function evaluar() {
+    var f = $("#qf");
+    var respuestas = [];
+    var aciertos = [];
+    Q.forEach(function (x, i) {
+        var ok = false;
+        var texto = "—";
+        var v;
+        var el;
+        if (x.type === "radio") {
+            el = f.querySelector("[name=q" + i + "]:checked");
+            v = el ? Number(el.value) : null;
+            ok = v === x.a;
+            texto = v === null ? "—" : x.o[v];
+        } else if (x.type === "select") {
+            el = f.querySelector("select[name=q" + i + "]");
+            v = el.value === "" ? null : Number(el.value);
+            ok = v === x.a;
+            texto = v === null ? "—" : x.o[v];
+        } else if (x.type === "check") {
+            v = valores($$("#qf [name=q" + i + "]:checked"));
+            ok = mismoConjunto(v, x.a);
+            texto = textos(x, v);
+        } else if (x.type === "list") {
+            el = f.querySelector("select[name=q" + i + "]");
+            v = valores(Array.prototype.slice.call(el.selectedOptions));
+            ok = mismoConjunto(v, x.a);
+            texto = textos(x, v);
+        } else if (x.type === "range") {
+            v = Number(f.querySelector("[name=q" + i + "]").value);
+            ok = v >= 270 && v <= 330;
+            texto = v + " ppp";
+        } else {
+            v = f.querySelector("[name=q" + i + "]").value.trim();
+            ok = /tercio/i.test(v);
+            texto = v || "—";
+        }
+        respuestas.push(texto);
+        aciertos.push(ok);
+    });
+
+    var correctas = aciertos.filter(Boolean).length;
+    var nota = Math.round(correctas * 1.25 * 10) / 10;
+    var aprobado = nota >= 6;
+    var folio = "CHR-" + Date.now().toString(36).toUpperCase().slice(-6);
+    var fecha = new Date().toLocaleDateString("es-GT", {day: "numeric", month: "long", year: "numeric"});
+    var datos = usuario || {nombre: "Anónimo"};
+
+    DB.guardar(Object.assign({folio: folio, fecha: new Date().toISOString()}, datos, {
+        respuestas: respuestas,
+        correctas: correctas,
+        calificacion: nota,
+        aprobado: aprobado
+    }));
+    mostrarResultado(nota, aprobado, aciertos, folio, fecha);
+}
+$("#send").onclick = evaluar;
+
+/* ===== Resultado y diploma ===== */
+function mostrarResultado(nota, aprobado, aciertos, folio, fecha) {
+    go("result");
+    $("#rn").textContent = nota.toFixed(1) + "/10";
+    $("#rmsg").textContent = aprobado
+            ? "¡Felicidades, aprobaste! 🎉"
+            : "Casi lo logras. ¡Repasa e inténtalo de nuevo! 💪";
+    var correctas = aciertos.filter(Boolean).length;
+    var marcas = aciertos.map(function (p) {
+        return p ? "✅" : "❌";
+    }).join(" ");
+    var html = "<p style=\"text-align:center;color:var(--muted)\">Respuestas correctas: "
+            + correctas + " de " + Q.length + " · " + marcas + "</p>";
+    if (aprobado) {
+        var nombre = usuario ? usuario.nombre + " " + usuario.apellido : "Estudiante";
+        html += "<div class=\"diploma\"><div class=\"in\">"
+                + "<p style=\"letter-spacing:.3em;font-weight:700;font-size:.85rem\">INSTITUTO CHROMA · ESCUELA DE ARTE Y DISEÑO</p>"
+                + "<h2 style=\"margin-top:14px\">Diploma de Aprobación</h2>"
+                + "<p style=\"margin-top:18px\">Se otorga el presente reconocimiento a</p>"
+                + "<div class=\"nm\">" + esc(nombre) + "</div>"
+                + "<p>por aprobar satisfactoriamente el curso<br><b style=\"font-size:1.3rem\">Fundamentos del Diseño Gráfico</b>"
+                + "<br>con una calificación de <b>" + nota.toFixed(1) + " / 10</b></p>"
+                + "<div class=\"seal\">C</div>"
+                + "<p style=\"margin-top:18px;font-size:.85rem\">" + fecha + " · Folio " + folio + "</p></div></div>";
+    } else {
+        html += "<div class=\"fail\"><h2 style=\"font-size:1.8rem\">Necesitas 6.0 para aprobar</h2>"
+                + "<p style=\"color:var(--muted);margin-top:8px\">Vuelve al curso, repasa los módulos y presenta de nuevo la evaluación.</p></div>";
+    }
+    $("#rbody").innerHTML = html;
+    $("#ract").innerHTML = (aprobado ? "<button class=\"btn\" onclick=\"window.print()\">🖨️ Imprimir / guardar PDF</button> " : "")
+            + "<button class=\"btn ghost\" onclick=\"" + (aprobado ? "location.reload()" : "go('course')") + "\">"
+            + (aprobado ? "Volver al inicio" : "Repasar el curso") + "</button>";
+}
+
+/* ===== Consulta de la base de datos ===== */
+function showDB() {
+    var lista = DB.todos();
+    var html = "<p>Aún no hay registros.</p>";
+    if (lista.length > 0) {
+        html = "<table><tr><th>Folio</th><th>Nombre</th><th>Correo</th><th>Nota</th><th>Estado</th></tr>"
+                + lista.map(function (r) {
+                    return "<tr><td>" + esc(r.folio) + "</td><td>" + esc(r.nombre) + " " + esc(r.apellido || "")
+                            + "</td><td>" + esc(r.correo || "") + "</td><td>" + r.calificacion + "</td><td>"
+                            + (r.aprobado ? "Aprobado" : "Reprobado") + "</td></tr>";
+                }).join("") + "</table>";
+    }
+    $("#dbt").innerHTML = html;
+    $("#dlg").hidden = false;
+}
+
+/* ===== Resaltar opciones seleccionadas ===== */
+document.addEventListener("change", function (e) {
+    var grupo = e.target.closest(".opts");
+    if (grupo) {
+        $$(".opts label").forEach(function (l) {
+            var i = l.querySelector("input");
+            if (i && grupo.contains(l)) {
+                l.classList.toggle("sel", i.checked);
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
